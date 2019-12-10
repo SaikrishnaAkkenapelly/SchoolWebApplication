@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.infor.student.util.DbConnection;
+
 import java.util.logging.Logger;
 
-import com.infor.student.util.GetDbConnection2;
 
 /**
  * @author sakkenapelly
@@ -48,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (action.equals("validateLogin")) {
 			String query = "select password from users where username=?";
-			try (Connection connection = GetDbConnection2.getConnection();
+			try (Connection connection = DbConnection.connect();
 					PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 				preparedStatement.setString(1, username);
 				try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -87,13 +89,13 @@ public class LoginServlet extends HttpServlet {
 			}
 			int rows=0;
 			String query = "insert into users values(?,?,?,?,?)";
-			try (Connection connection = GetDbConnection2.getConnection();
+			try (Connection connection = DbConnection.connect();
 					PreparedStatement preparedStatement = connection.prepareStatement(query);) {
-				preparedStatement.setString(1, username);
-				preparedStatement.setString(2, password);
-				preparedStatement.setString(3, firstname);
-				preparedStatement.setString(4, lastname);
-				preparedStatement.setString(5, gender);
+				preparedStatement.setString(1, firstname);
+				preparedStatement.setString(2,lastname);
+				preparedStatement.setString(3, gender);
+				preparedStatement.setString(4, username);
+				preparedStatement.setString(5, password);
 				dispatcher=req.getRequestDispatcher("jsp/userreg.jsp");
 				rows=preparedStatement.executeUpdate();
 				req.setAttribute("rowsinserted",rows);

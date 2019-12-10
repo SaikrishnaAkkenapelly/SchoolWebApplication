@@ -42,7 +42,6 @@ public class SubjectsServlet extends HttpServlet {
 			HttpSession session=req.getSession();
 			studentslist = studentsdaoimpl.getAllStudents();
 			session.setAttribute("studentslist", studentslist);
-			
 			requestdispatcher = req.getRequestDispatcher("jsp/subjects.jsp");
 			requestdispatcher.forward(req, resp);
 		}

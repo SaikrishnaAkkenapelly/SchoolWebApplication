@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 
-import com.infor.student.util.GetDbConnection2;
+import com.infor.student.util.DbConnection;
 
 /**
  * @author sakkenapelly
@@ -33,7 +33,7 @@ public class SubjectsDaoImpl extends HttpServlet {
 	{
 		String query = "insert into subjects(id,subname) values(?,?)";
 		int rows=0;
-		try (Connection connection = GetDbConnection2.getConnection();
+		try (Connection connection = DbConnection.connect();
 				PreparedStatement ps = connection.prepareStatement(query);)
 				{
 					for (String subjectname : subjectsList) {
