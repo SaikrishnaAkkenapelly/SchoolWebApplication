@@ -2,8 +2,8 @@
 	<head>
 		<title>students data</title>
 		
-		<link rel="stylesheet" type="text/css" href="http://localhost:8080/StudentRegistration/css/students.css">
-		<script type="text/javascript" src="http://localhost:8080/StudentRegistration/js/validations.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://localhost:9090/StudentRegistration/css/students.css">
+		<script type="text/javascript" src="http://localhost:9090/StudentRegistration/js/validations.js"></script>
 	</head>
 	<body>
 	<%
@@ -16,22 +16,22 @@
 			<div class="headerdivision">
 					<table class="headertable">
 						<tr>
-							<td class="logo"><img src="http://localhost:8080/StudentRegistration/images/SchoolLogo.png" height=29px;"></td>
-							<td><a href="http://localhost:8080/StudentRegistration/jsp/students.jsp">Enroll New Student</a></td>
-							<td><a href="http://localhost:8080/StudentRegistration/SubjectsServlet?action=getmarks">Update Marks</a></td>
-							<td><a href="http://localhost:8080/StudentRegistration/MarksServlet?action=LoadStudents">View Grades</a></td>
-							<td><a href="http://localhost:8080/StudentRegistration/LoginServlet?action=Logout">Log Out</a></td>
+							<td class="logo"><img src="http://localhost:9090/StudentRegistration/images/SchoolLogo.png" height=29px;"></td>
+							<td><a href="http://localhost:9090/StudentRegistration/jsp/students.jsp">Enroll New Student</a></td>
+							<td><a href="http://localhost:9090/StudentRegistration/SubjectsServlet?action=getmarks">Update Marks</a></td>
+							<td><a href="http://localhost:9090/StudentRegistration/MarksServlet?action=LoadStudents">View Grades</a></td>
+							<td><a href="http://localhost:9090/StudentRegistration/LoginServlet?action=Logout">Log Out</a></td>
 						</tr>
 					</table>
 			</div>
 			<div class="bodydivision">
-					<img src="http://localhost:8080/StudentRegistration/images/schoolimage.png" width=100%;>
+					<img src="http://localhost:9090/StudentRegistration/images/schoolimage.png" width=100%;>
 						<div class="middledivision">
 							<p>Enroll New Student</p>
 						</div>
 						<div class="formdivision">
 								<center>
-										<form method="POST" action="http://localhost:8080/StudentRegistration/StudentsServlet?action=enrollnewstudent" name="enrollmentform">
+										<form method="POST" action="http://localhost:9090/StudentRegistration/StudentsServlet?action=enrollnewstudent" name="enrollmentform">
 											<center>
 												<table>
 												<tr>
@@ -86,7 +86,7 @@
 															out.print(y.intValue()+" Subjects Enrolled");
 														}%></td>
 														</tr>
-														<tr><td class="formbottomtd"> <a href="http://localhost:8080/StudentRegistration/jsp/home.jsp">Home Page</a></td></tr>
+														<tr><td class="formbottomtd"> <a href="http://localhost:9090/StudentRegistration/jsp/home.jsp">Home Page</a></td></tr>
 						</table>
 						
 					</center>

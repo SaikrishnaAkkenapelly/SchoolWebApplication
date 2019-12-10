@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.infor.student.util.CloseDbConnection2;
-import com.infor.student.util.GetDbConnection2;
 import com.infor.student.pojo.Marks;
 import com.infor.student.pojo.Student;
-
+import com.infor.student.util.DbConnection;
 
 /**
  * @author sakkenapelly
@@ -26,36 +24,24 @@ public class StudentsDaoImpl {
 	 * @param studentsobject
 	 * @return student no
 	 */
-	public  long enrollNewStudent(Student studentsobject) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		String query = "insert into students values(student_id.nextval,?,?,?)";
+	public long enrollNewStudent(Student studentsobject) {
+		String query = "insert into students(name,dob,email) values(?,?,?)";
 		long studentId = 0;
-		int rows=0;
 		long milliseconds = 0;
-		ResultSet resultSet=null;
-		try {
-			connection = GetDbConnection2.getConnection();
-			preparedStatement =	connection.prepareStatement(query,new String[]{"id"});
+		try (Connection connection = DbConnection.connect();
+				PreparedStatement preparedStatement = connection.prepareStatement(query, new String[] { "id" });) {
 			preparedStatement.setString(1, studentsobject.getName());
 			milliseconds = studentsobject.getDob().getTime();
 			preparedStatement.setDate(2, new java.sql.Date(milliseconds));
 			preparedStatement.setString(3, studentsobject.getEmail());
-			rows = preparedStatement.executeUpdate();
-			resultSet=preparedStatement.getGeneratedKeys();
-			while(resultSet.next())
-			{
-				studentId=resultSet.getLong(1);
+			preparedStatement.executeUpdate();
+			try (ResultSet resultSet = preparedStatement.getGeneratedKeys();) {
+				while (resultSet.next()) {
+					studentId = resultSet.getLong(1);
+				}
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			logger.info("SQL Exception raised");
-		} finally {
-			try {
-				CloseDbConnection2.closeConnection(connection,
-						preparedStatement);
-			} catch (SQLException e) {
-				logger.info("SQL Exception raised");
-			}
 		}
 		return studentId;
 	}
@@ -67,21 +53,15 @@ public class StudentsDaoImpl {
 
 		List<Student> list = new ArrayList<>();
 		String query = "select id,name,dob,email from students";
-		try (Connection connection = GetDbConnection2.getConnection();
-				PreparedStatement ps = connection.prepareStatement(query);)
-				{
-					try (ResultSet resultSet = ps.executeQuery();)
-					{
-						while (resultSet.next())
-						{
-							list.add(new Student(resultSet.getLong(1), resultSet
-									.getString(2), resultSet.getDate(3), resultSet
-									.getString(4)));
-						}
-					}
+		try (Connection connection = DbConnection.connect();
+				PreparedStatement ps = connection.prepareStatement(query);) {
+			try (ResultSet resultSet = ps.executeQuery();) {
+				while (resultSet.next()) {
+					list.add(new Student(resultSet.getLong(1), resultSet.getString(2), resultSet.getDate(3),
+							resultSet.getString(4)));
 				}
-		catch (SQLException e)
-		{
+			}
+		} catch (SQLException e) {
 			logger.info("SQL Exception raised in StudentsDaoIMp");
 		}
 		return list;
@@ -92,24 +72,18 @@ public class StudentsDaoImpl {
 	 * @param id
 	 * @return student ids list
 	 */
-	public List<String> getSubjectsbyId(long id)
-	{
+	public List<String> getSubjectsbyId(long id) {
 		List<String> subjectslist = new ArrayList<>();
 		String query = "select subname from subjects where id = ?";
-		try (Connection connection = GetDbConnection2.getConnection();
-				PreparedStatement ps = connection.prepareStatement(query);)
-				{
-					ps.setLong(1, id);
-					try (ResultSet resultSet = ps.executeQuery();)
-					{
-						while (resultSet.next())
-						{
-							subjectslist.add(resultSet.getString(1));
-						}
-					}
+		try (Connection connection = DbConnection.connect();
+				PreparedStatement ps = connection.prepareStatement(query);) {
+			ps.setLong(1, id);
+			try (ResultSet resultSet = ps.executeQuery();) {
+				while (resultSet.next()) {
+					subjectslist.add(resultSet.getString(1));
 				}
-		catch (SQLException e)
-		{
+			}
+		} catch (SQLException e) {
 			logger.info("SQL Exception raised in StudentsDaoIMp");
 		}
 		for (String string : subjectslist) {
@@ -117,7 +91,7 @@ public class StudentsDaoImpl {
 		}
 		return subjectslist;
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -126,13 +100,10 @@ public class StudentsDaoImpl {
 	 * @return marks
 	 */
 	public int insertMarks(long id, String subname, long marks) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
 		String query = "insert into marks values(?,?,?)";
 		int rows = 0;
-		try {
-			connection = GetDbConnection2.getConnection();
-			preparedStatement = connection.prepareStatement(query);
+		try (Connection connection = DbConnection.connect();
+				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 			preparedStatement.setLong(1, id);
 			preparedStatement.setString(2, subname);
 			preparedStatement.setLong(3, marks);
@@ -140,13 +111,6 @@ public class StudentsDaoImpl {
 			System.out.println(rows + " " + "row(s) inserted into students");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				CloseDbConnection2.closeConnection(connection,
-						preparedStatement);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return rows;
 	}
@@ -159,90 +123,58 @@ public class StudentsDaoImpl {
 	 */
 	public int getMarks(String subjectname, long id) {
 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultset;
 		String query = "select subjectmarks from marks where subname=? and id= ?";
 		int marks = 0;
-		try {
-			connection = GetDbConnection2.getConnection();
-			preparedStatement = connection.prepareStatement(query);
+		try (Connection connection = DbConnection.connect();
+				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 			preparedStatement.setString(1, subjectname);
 			preparedStatement.setLong(2, id);
-			resultset = preparedStatement.executeQuery();
-			if (resultset.next())
-				marks = resultset.getInt(1);
+			try (ResultSet resultset = preparedStatement.executeQuery();) {
+				if (resultset.next())
+					marks = resultset.getInt(1);
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				CloseDbConnection2.closeConnection(connection,
-						preparedStatement);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return marks;
-
 	}
 
-	public int updateMarks(Long id, String subname , Long marks) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+	public int updateMarks(Long id, String subname, Long marks) {
 		String query = "update marks set subjectmarks=? where id=? and subname=?";
 		int rows = 0;
-		try {
-			connection = GetDbConnection2.getConnection();
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setLong(1,marks);
-			preparedStatement.setLong(2,id);
-			preparedStatement.setString(3,subname);
+		try (Connection connection = DbConnection.connect();
+				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+			preparedStatement.setLong(1, marks);
+			preparedStatement.setLong(2, id);
+			preparedStatement.setString(3, subname);
 			rows = preparedStatement.executeUpdate();
 			System.out.println(rows + " " + "row(s) inserted into students");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				CloseDbConnection2
-						.closeConnection(connection, preparedStatement);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return rows;
 	}
 
 	public List<Marks> getMarksById(Long id) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
+
 		List<Marks> list = new ArrayList<Marks>();
-		String query="select id,subname,subjectmarks from Marks where id=?";
-		try {
-			connection = GetDbConnection2.getConnection();
-			
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setLong(1,id);
-			resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				list.add(new Marks(resultSet.getLong(1), resultSet
-						.getString(2),resultSet.getLong(3)));
-				
+		String query = "select id,subname,subjectmarks from Marks where id=?";
+		try (Connection connection = DbConnection.connect();
+				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+			preparedStatement.setLong(1, id);
+			try (ResultSet resultSet = preparedStatement.executeQuery();) {
+
+				while (resultSet.next()) {
+					list.add(new Marks(resultSet.getLong(1), resultSet.getString(2), resultSet.getLong(3)));
+
+				}
 			}
-			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				CloseDbConnection2
-						.closeConnection(connection, preparedStatement);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return list;
 	}
-	
 
 }

@@ -22,7 +22,7 @@
 							<td><a href="jsp/students.jsp">Enroll New Student</a></td>
 							<td><a href="SubjectsServlet?action=getmarks">Update Marks</a></td>
 							<td><a href="MarksServlet?action=LoadStudents">View Grades</a></td>
-							<td><a href="http://localhost:8080/StudentRegistration/LoginServlet?action=Logout">Log Out</a></td>
+							<td><a href="http://localhost:9090/StudentRegistration/LoginServlet?action=Logout">Log Out</a></td>
 						</tr>
 					</table>
 			</div>
@@ -145,7 +145,7 @@
 													}
 													%>
 													<table>
-														<tr><td><h6><a href="http://localhost:8080/StudentRegistration/jsp/home.jsp">Home Page</a></h6></td></tr>
+														<tr><td><h6><a href="http://localhost:9090/StudentRegistration/jsp/home.jsp">Home Page</a></h6></td></tr>
 													</table>		
 					</center>
 				</div>

@@ -1,24 +1,24 @@
 <html>
 <head>
 <title>home page</title>
-<link rel="stylesheet" type="text/css" href="http://localhost:8080/StudentRegistration/css/login.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/StudentRegistration/css/login.css">
 </head>
 <body>
 	<div class="headerdivision">
 			<table class="headertable">
 				<tr>
-					<td class="logo"><img src="http://localhost:8080/StudentRegistration/images/SchoolLogo.png" height=29px;"></td>
+					<td class="logo"><img src="http://localhost:9090/StudentRegistration/images/SchoolLogo.png" height=29px;"></td>
 				</tr>
 			</table>
 	</div>
 	<div class="bodydivision">
-		<img src="http://localhost:8080/StudentRegistration/images/schoolimage.png" width=100%;>
+		<img src="http://localhost:9090/StudentRegistration/images/schoolimage.png" width=100%;>
 		<div class="welcomemessage"><p>Welcome to Infor School</p>
 		</div>
 	</div>
 		<div class="formdivision">
 								<center>
-										<form method="POST" action="http://localhost:8080/StudentRegistration/LoginServlet?action=validateLogin" name="enrollmentform">
+										<form method="POST" action="http://localhost:9090/StudentRegistration/LoginServlet?action=validateLogin" name="enrollmentform">
 											<center>
 												<table>
 												<tr>
@@ -36,7 +36,7 @@
 												<tr></tr>
 												<tr></tr>
 												<tr></tr>
-												<tr><td></td><td><a href="http://localhost:8080/StudentRegistration/jsp/userreg.jsp">New User? Register Here</a></td></tr>
+												<tr><td></td><td><a href="http://localhost:9090/StudentRegistration/jsp/userreg.jsp">New User? Register Here</a></td></tr>
 												<%
 												Object errormessage=request.getAttribute("errormessage");
 												if(errormessage!=null)
