@@ -1,7 +1,7 @@
 <html>
 		<%@ page import="java.util.List" %>
 		<%@ page import="java.util.HashMap" %>
-		<%@ page import="com.infor.student.pojo.Student" %>
+		<%@ page import="app.student.pojo.Student" %>
 		
 	<head>
 		<title>marks data</title>

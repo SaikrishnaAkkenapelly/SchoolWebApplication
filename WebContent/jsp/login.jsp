@@ -13,7 +13,7 @@
 	</div>
 	<div class="bodydivision">
 		<img src="http://localhost:9090/StudentRegistration/images/schoolimage.png" width=100%;>
-		<div class="welcomemessage"><p>Welcome to Infor School</p>
+		<div class="welcomemessage"><p>Welcome to G School</p>
 		</div>
 	</div>
 		<div class="formdivision">

@@ -3,7 +3,7 @@
   <display-name>StudentRegistration</display-name>
   <servlet>
 		<servlet-name>StudentsServlet</servlet-name>
-		<servlet-class>com.infor.student.servlets.StudentsServlet</servlet-class>
+		<servlet-class>app.student.servlets.StudentsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>StudentsServlet</servlet-name>
@@ -11,15 +11,15 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MarksServlet</servlet-name>
-		<servlet-class>com.infor.student.servlets.MarksServlet</servlet-class>
+		<servlet-class>app.student.servlets.MarksServlet</servlet-class>
 	</servlet>
 		<servlet>
 		<servlet-name>SubjectsServlet</servlet-name>
-		<servlet-class>com.infor.student.servlets.SubjectsServlet</servlet-class>
+		<servlet-class>app.student.servlets.SubjectsServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>com.infor.student.servlets.LoginServlet</servlet-class>
+		<servlet-class>app.student.servlets.LoginServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MarksServlet</servlet-name>

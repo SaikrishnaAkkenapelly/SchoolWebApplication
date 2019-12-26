@@ -1,8 +1,8 @@
 <html>
 		<%@ page import="java.util.List" %>
 		<%@ page import="java.util.HashMap" %>
-		<%@ page import="com.infor.student.pojo.Student" %>
-		<%@ page import="com.infor.student.pojo.Marks" %>
+		<%@ page import="app.student.pojo.Student" %>
+		<%@ page import="app.student.pojo.Marks" %>
 <head>
 <title>subjects</title>
 <link rel="stylesheet" type="text/css" href="css/subjects.css">
